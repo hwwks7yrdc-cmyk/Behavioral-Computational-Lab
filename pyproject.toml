@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lab-experiment-toolkit"
+version = "0.1.0"
+description = "Specification-driven oTree experiments (public goods games), design linting, session materials, and power simulation for session-clustered lab data."
+readme = "README.md"
+requires-python = ">=3.9,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Tim Maurice Steiner" }]
+dependencies = ["jinja2>=3.1", "pyyaml>=6", "numpy>=1.24", "pandas>=1.5", "scipy>=1.10", "statsmodels>=0.14"]
+
+[project.optional-dependencies]
+otree = ["otree>=5.10,<6"]
+agent = ["anthropic>=0.40"]
+plot = ["matplotlib>=3.7"]
+dev = ["pytest>=7", "matplotlib>=3.7", "otree>=5.10,<6", "requests"]
+
+[project.scripts]
+expbuilder = "expbuilder.cli:main"
+powersim = "powersim.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["expbuilder*", "powersim*"]
+
+[tool.setuptools.package-data]
+expbuilder = ["templates/**/*.j2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

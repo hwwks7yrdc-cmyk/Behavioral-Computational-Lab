@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "lab-experiment-toolkit: specification-driven oTree experiments and power simulation for session-clustered lab data"
+version: 0.1.0
+date-released: 2026-11-01
+license: MIT
+authors:
+  - family-names: Steiner
+    given-names: Tim Maurice
+    affiliation: Duke Kunshan University
+    orcid: "https://orcid.org/0009-0004-1560-0137"
+keywords:
+  - oTree
+  - public goods game
+  - experimental economics
+  - power analysis
+  - cluster-robust inference

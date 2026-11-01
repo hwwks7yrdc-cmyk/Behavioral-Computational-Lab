@@ -1,0 +1,10 @@
+{{ block title }}Comprehension questions{{ endblock }}
+{{ block content }}
+<p>Please answer the following questions. They do not affect your earnings. You have up to {{ C.QUIZ_MAX_ATTEMPTS }} attempt(s).</p>
+{{ formfields }}
+{{ next_button }}
+<details class="mt-4">
+  <summary>Show the instructions again</summary>
+  {{ include_sibling 'instructions.html' }}
+</details>
+{{ endblock }}

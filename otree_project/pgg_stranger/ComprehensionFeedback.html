@@ -1,0 +1,10 @@
+{{ block title }}Correct answers{{ endblock }}
+{{ block content }}
+<p>Here are the correct answers with an explanation. Please read them carefully before you continue. If anything is unclear, please raise your hand.</p>
+<ol>
+{{ for q in quiz }}
+  <li class="mb-3"><p>{{ q.text }}</p><p><strong>Answer: {{ q.answer }}.</strong> {{ q.explanation }}</p></li>
+{{ endfor }}
+</ol>
+{{ next_button }}
+{{ endblock }}

@@ -162,7 +162,7 @@ If you use this toolkit, please cite it using the metadata in [`CITATION.cff`](C
 
 ## Acknowledgements
 
-Developed while working as a research assistant in the Behavioral and Computational Lab at Duke Kunshan University. The lab's internal tools and data are not part of this repository. Parts of the code were written with the help of AI coding assistants; the design, tests and results were reviewed by the author.
+Developed while working as a research assistant in the Behavioral and Computational Lab at Duke Kunshan University. The lab's internal tools and data are not part of this repository.
 
 ## References
 

@@ -1,0 +1,93 @@
+[# Each page is separated by a line "=== <FileName>.html". Jinja ([[ ]], [% %]) runs at build time;
+   oTree template tags ({{ }}) are written through unchanged and run in the lab. #]
+=== Introduction.html
+{{ block title }}Instructions{{ endblock }}
+{{ block content }}
+{{ include_sibling 'instructions.html' }}
+<p>Please click <em>Next</em> when you have read the instructions.</p>
+{{ next_button }}
+{{ endblock }}
+=== Comprehension.html
+{{ block title }}Comprehension questions{{ endblock }}
+{{ block content }}
+<p>Please answer the following questions. They do not affect your earnings. You have up to {{ C.QUIZ_MAX_ATTEMPTS }} attempt(s).</p>
+{{ formfields }}
+{{ next_button }}
+<details class="mt-4">
+  <summary>Show the instructions again</summary>
+  {{ include_sibling 'instructions.html' }}
+</details>
+{{ endblock }}
+=== ComprehensionFeedback.html
+{{ block title }}Correct answers{{ endblock }}
+{{ block content }}
+<p>Here are the correct answers with an explanation. Please read them carefully before you continue. If anything is unclear, please raise your hand.</p>
+<ol>
+{{ for q in quiz }}
+  <li class="mb-3"><p>{{ q.text }}</p><p><strong>Answer: {{ q.answer }}.</strong> {{ q.explanation }}</p></li>
+{{ endfor }}
+</ol>
+{{ next_button }}
+{{ endblock }}
+=== Contribute.html
+{{ block title }}Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}{{ endblock }}
+{{ block content }}
+<p>You have <strong>{{ C.ENDOWMENT }} points</strong>. Every point in the group account gives each of the {{ C.PLAYERS_PER_GROUP }} members {{ C.MPCR }} points{{ if C.THRESHOLD }} if the group total reaches {{ C.THRESHOLD_AMOUNT }}{{ endif }}.</p>
+{{ formfield 'contribution' }}
+{{ next_button }}
+{{ if history }}
+<h5 class="mt-4">Previous rounds</h5>
+<table class="table table-sm">
+  <tr><th>Round</th><th>Your contribution</th><th>Group total</th><th>Your earnings</th></tr>
+  {{ for row in history }}
+  <tr><td>{{ row.round }}</td><td>{{ row.contribution }}</td><td>{{ row.total }}</td><td>{{ row.earnings }}</td></tr>
+  {{ endfor }}
+</table>
+{{ endif }}
+<details class="mt-3"><summary>Instructions</summary>{{ include_sibling 'instructions.html' }}</details>
+{{ endblock }}
+[% if spec.punishment.enabled %]=== Punish.html
+{{ block title }}Round {{ player.round_number }}: deduction stage{{ endblock }}
+{{ block content }}
+<p>Your contribution: <strong>{{ player.contribution }}</strong>. Your earnings so far in this round: <strong>{{ player.stage1_earnings }}</strong> points.</p>
+<table class="table table-sm">
+  <tr><th>Member</th><th>Contribution</th></tr>
+  {{ for o in others }}<tr><td>Member {{ o.id }}</td><td>{{ o.contribution }}</td></tr>{{ endfor }}
+</table>
+<p>Each deduction point costs you {{ C.PUNISH_COST }} and reduces the receiver's earnings by {{ C.PUNISH_IMPACT }}. You can assign up to {{ C.PUNISH_MAX }} points per member and spend at most your earnings in this round.</p>
+{{ formfields }}
+{{ next_button }}
+{{ endblock }}
+[% endif %]=== Results.html
+{{ block title }}Round {{ player.round_number }}: results{{ endblock }}
+{{ block content }}
+<table class="table table-sm">
+  <tr><th>Member</th><th>Contribution</th></tr>
+  {{ for m in members }}<tr{{ if m.you }} class="table-active"{{ endif }}><td>Member {{ m.id }}{{ if m.you }} (you){{ endif }}</td><td>{{ m.contribution }}</td></tr>{{ endfor }}
+  <tr><th>Group total</th><th>{{ group.total_contribution }}</th></tr>
+</table>
+{{ if C.THRESHOLD }}<p>The threshold of {{ C.THRESHOLD_AMOUNT }} points was <strong>{{ if group.threshold_met }}reached{{ else }}not reached{{ endif }}</strong>.</p>{{ endif }}
+<ul>
+  <li>Kept in your private account and returned from the group account: <strong>{{ player.stage1_earnings }}</strong> points</li>
+[% if spec.punishment.enabled %]  <li>Deduction points you assigned: {{ player.punishment_given }} (cost {{ player.punishment_given }} × {{ C.PUNISH_COST }})</li>
+  <li>Deduction points you received: {{ player.punishment_received }} (reduction {{ player.punishment_received }} × {{ C.PUNISH_IMPACT }})</li>
+[% endif %]  <li>Your earnings in this round: <strong>{{ player.round_earnings }}</strong> points</li>
+</ul>
+{{ next_button }}
+{{ if history }}
+<h5 class="mt-4">All rounds so far</h5>
+<table class="table table-sm">
+  <tr><th>Round</th><th>Your contribution</th><th>Group total</th><th>Your earnings</th></tr>
+  {{ for row in history }}
+  <tr><td>{{ row.round }}</td><td>{{ row.contribution }}</td><td>{{ row.total }}</td><td>{{ row.earnings }}</td></tr>
+  {{ endfor }}
+</table>
+{{ endif }}
+{{ endblock }}
+=== FinalResults.html
+{{ block title }}End of the study{{ endblock }}
+{{ block content }}
+{{ if paying_round }}<p>Round <strong>{{ paying_round }}</strong> was randomly selected for payment.</p>{{ endif }}
+<p>Your earnings: <strong>{{ total_points }}</strong>. Including the participation fee, you will receive <strong>{{ total_money }}</strong>.</p>
+<p>Thank you for taking part. Please remain seated until you are called for payment.</p>
+{{ endblock }}

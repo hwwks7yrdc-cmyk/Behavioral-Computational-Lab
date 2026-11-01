@@ -1,0 +1,51 @@
+## Instructions
+
+### Overview
+
+You are now taking part in a study of decision making. Please read these instructions carefully. Your earnings depend on your own decisions and on the decisions of other participants.
+
+You will be randomly assigned to a group of **[[ n ]] participants**. [% if spec.matching == 'partner' %]You will stay in the **same group for all [[ spec.num_rounds ]] round[[ 's' if spec.num_rounds > 1 ]]**.[% else %]Groups are **randomly re-formed in every round**, so in each round you will usually be in a group with different participants.[% endif %] You will not learn who the other members of your group are, and they will not learn who you are.
+
+### Your decision in each round
+
+At the beginning of each round you receive **[[ e ]] points**. You decide how many of these points to put into a **group account**. You can contribute any whole number of points from 0 to [[ e ]]. The points you do not contribute stay in your **private account**.
+
+### How your earnings are calculated
+
+- Every point in your private account is worth one point to you.
+- The points contributed by all members of your group are added up. [% if spec.threshold.enabled %]If this total is at least **[[ spec.threshold.amount ]] points**, then[% else %]Then[%endif %] every member receives **[[ spec.mpcr ]] points for every point in the group account**, no matter who contributed it.
+[% if spec.threshold.enabled %]- If the total is **below [[ spec.threshold.amount ]] points**, the group account pays nothing.[% if spec.threshold.refund %] In that case every member gets their own contribution back.[% else %] In that case the contributions are lost.[% endif %]
+[% if spec.threshold.bonus %]- If the total reaches [[ spec.threshold.amount ]] points, every member additionally receives a bonus of **[[ spec.threshold.bonus ]] points**.
+[% endif %][% endif %]
+In short, your earnings in a round[% if spec.punishment.enabled %] before deductions[% endif %] are:
+
+**(points kept in your private account) + [[ spec.mpcr ]] × (total points in the group account)[% if spec.threshold.enabled %], if the total reaches [[ spec.threshold.amount ]][% endif %][% if spec.threshold.enabled and spec.threshold.bonus %], plus the bonus[% endif %]**
+
+### Example
+
+[[ example.text ]]
+
+[[ example.explanation ]]
+[% if spec.punishment.enabled %]
+### Deduction stage
+
+After all members have decided, you see how many points each other member of your group contributed. Members are identified only by a number. You can then assign **deduction points** to each other member, from 0 to [[ spec.punishment.max_points ]] points per member.
+
+- Each deduction point you assign **costs you [[ spec.punishment.cost_per_point ]] point[[ 's' if spec.punishment.cost_per_point > 1 ]]**.
+- Each deduction point a member receives **reduces that member's earnings by [[ spec.punishment.impact_per_point ]] points**.
+- You cannot spend more on deduction points than your earnings in that round.
+[% if spec.punishment.floor_at_zero %]- Your earnings in a round cannot fall below zero.
+[% endif %]
+The other members can also assign deduction points to you.
+[% endif %]
+### After each round
+
+At the end of each round you see the contributions of your group[% if spec.punishment.enabled %], the deduction points you received[% endif %] and your earnings.[% if spec.show_history %] A table shows your results from earlier rounds.[% endif %][% if spec.decision_timeout_seconds %] You have [[ spec.decision_timeout_seconds ]] seconds for each decision; if you do not decide in time, your contribution is recorded as 0.[% endif %]
+
+### Payment
+
+[% if spec.payment.rule == 'random_round' %]At the end of the study, **one round is selected at random**, and you are paid your earnings from that round. Every round is equally likely to be selected, so please treat every round as if it were the one that counts.[% else %]Your earnings from **all [[ spec.num_rounds ]] rounds are added up**.[% endif %] Points are converted into money at a rate of **[[ conv ]] points = 1 [[ spec.payment.currency_code ]]**. In addition, you receive a participation fee of **[[ fee ]] [[ spec.payment.currency_code ]]**.
+
+### Before you start
+
+You will answer [[ quiz | length ]] short question[[ 's' if quiz | length > 1 ]] to check that the rules are clear. If you have a question at any time, please raise your hand.

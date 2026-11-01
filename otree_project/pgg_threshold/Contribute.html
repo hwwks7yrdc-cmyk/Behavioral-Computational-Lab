@@ -1,0 +1,16 @@
+{{ block title }}Round {{ player.round_number }} of {{ C.NUM_ROUNDS }}{{ endblock }}
+{{ block content }}
+<p>You have <strong>{{ C.ENDOWMENT }} points</strong>. Every point in the group account gives each of the {{ C.PLAYERS_PER_GROUP }} members {{ C.MPCR }} points{{ if C.THRESHOLD }} if the group total reaches {{ C.THRESHOLD_AMOUNT }}{{ endif }}.</p>
+{{ formfield 'contribution' }}
+{{ next_button }}
+{{ if history }}
+<h5 class="mt-4">Previous rounds</h5>
+<table class="table table-sm">
+  <tr><th>Round</th><th>Your contribution</th><th>Group total</th><th>Your earnings</th></tr>
+  {{ for row in history }}
+  <tr><td>{{ row.round }}</td><td>{{ row.contribution }}</td><td>{{ row.total }}</td><td>{{ row.earnings }}</td></tr>
+  {{ endfor }}
+</table>
+{{ endif }}
+<details class="mt-3"><summary>Instructions</summary>{{ include_sibling 'instructions.html' }}</details>
+{{ endblock }}

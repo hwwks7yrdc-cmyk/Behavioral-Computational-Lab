@@ -1,0 +1,6 @@
+{{ block title }}End of the study{{ endblock }}
+{{ block content }}
+{{ if paying_round }}<p>Round <strong>{{ paying_round }}</strong> was randomly selected for payment.</p>{{ endif }}
+<p>Your earnings: <strong>{{ total_points }}</strong>. Including the participation fee, you will receive <strong>{{ total_money }}</strong>.</p>
+<p>Thank you for taking part. Please remain seated until you are called for payment.</p>
+{{ endblock }}

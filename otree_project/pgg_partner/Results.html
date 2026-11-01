@@ -1,0 +1,23 @@
+{{ block title }}Round {{ player.round_number }}: results{{ endblock }}
+{{ block content }}
+<table class="table table-sm">
+  <tr><th>Member</th><th>Contribution</th></tr>
+  {{ for m in members }}<tr{{ if m.you }} class="table-active"{{ endif }}><td>Member {{ m.id }}{{ if m.you }} (you){{ endif }}</td><td>{{ m.contribution }}</td></tr>{{ endfor }}
+  <tr><th>Group total</th><th>{{ group.total_contribution }}</th></tr>
+</table>
+{{ if C.THRESHOLD }}<p>The threshold of {{ C.THRESHOLD_AMOUNT }} points was <strong>{{ if group.threshold_met }}reached{{ else }}not reached{{ endif }}</strong>.</p>{{ endif }}
+<ul>
+  <li>Kept in your private account and returned from the group account: <strong>{{ player.stage1_earnings }}</strong> points</li>
+  <li>Your earnings in this round: <strong>{{ player.round_earnings }}</strong> points</li>
+</ul>
+{{ next_button }}
+{{ if history }}
+<h5 class="mt-4">All rounds so far</h5>
+<table class="table table-sm">
+  <tr><th>Round</th><th>Your contribution</th><th>Group total</th><th>Your earnings</th></tr>
+  {{ for row in history }}
+  <tr><td>{{ row.round }}</td><td>{{ row.contribution }}</td><td>{{ row.total }}</td><td>{{ row.earnings }}</td></tr>
+  {{ endfor }}
+</table>
+{{ endif }}
+{{ endblock }}

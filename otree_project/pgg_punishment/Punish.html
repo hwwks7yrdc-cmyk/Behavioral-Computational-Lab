@@ -1,0 +1,11 @@
+{{ block title }}Round {{ player.round_number }}: deduction stage{{ endblock }}
+{{ block content }}
+<p>Your contribution: <strong>{{ player.contribution }}</strong>. Your earnings so far in this round: <strong>{{ player.stage1_earnings }}</strong> points.</p>
+<table class="table table-sm">
+  <tr><th>Member</th><th>Contribution</th></tr>
+  {{ for o in others }}<tr><td>Member {{ o.id }}</td><td>{{ o.contribution }}</td></tr>{{ endfor }}
+</table>
+<p>Each deduction point costs you {{ C.PUNISH_COST }} and reduces the receiver's earnings by {{ C.PUNISH_IMPACT }}. You can assign up to {{ C.PUNISH_MAX }} points per member and spend at most your earnings in this round.</p>
+{{ formfields }}
+{{ next_button }}
+{{ endblock }}

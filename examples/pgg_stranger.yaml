@@ -1,0 +1,21 @@
+# Same game with groups re-formed every round (no repeated-game incentives).
+name: pgg_stranger
+title: Public Goods Game (stranger matching)
+game: public_goods
+players_per_group: 4
+num_rounds: 10
+endowment: 20
+mpcr: 0.4
+matching: stranger
+show_history: true
+decision_timeout_seconds: 90
+session_size: 16
+payment:
+  rule: random_round
+  points_per_currency_unit: 2
+  currency_code: CNY
+  participation_fee: 15
+comprehension:
+  num_questions: 4
+  max_attempts: 3
+  seed: 2027

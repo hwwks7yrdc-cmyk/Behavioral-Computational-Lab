@@ -1,0 +1,27 @@
+# Peer punishment in the style of Fehr & Gächter (2000, AER): 1:3 cost-impact ratio, fixed groups.
+name: pgg_punishment
+title: Public Goods Game with Peer Punishment
+game: public_goods
+players_per_group: 4
+num_rounds: 10
+endowment: 20
+mpcr: 0.4
+matching: partner
+show_history: true
+decision_timeout_seconds: 120
+session_size: 16
+punishment:
+  enabled: true
+  max_points: 10
+  cost_per_point: 1
+  impact_per_point: 3
+  floor_at_zero: true
+payment:
+  rule: random_round
+  points_per_currency_unit: 2
+  currency_code: CNY
+  participation_fee: 15
+comprehension:
+  num_questions: 5
+  max_attempts: 3
+  seed: 2028
